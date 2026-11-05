@@ -1,0 +1,69 @@
+/* Suite brand. Edit this file to white-label, then rebuild the SPAs.
+   Studios and the Mail Vuetify theme both read these variables.
+   --oxy-*-light and --oxy-*-dark stay fixed. The unsuffixed names follow data-theme. */
+
+:root {
+  --oxy-ink-light: #1c1917;
+  --oxy-muted-light: #78716c;
+  --oxy-surface-light: #fffcf7;
+  --oxy-bg-light: #f3f0ea;
+  --oxy-line-light: #e7e0d5;
+  --oxy-wash-a-light: #d9efe8;
+  --oxy-wash-b-light: #f5e6d3;
+  --oxy-shadow-light: 0 12px 40px rgba(28, 25, 23, 0.08);
+  --oxy-field-light: #fffcf7;
+
+  --oxy-ink-dark: #ecfdf5;
+  --oxy-muted-dark: #a8bdb6;
+  --oxy-surface-dark: #1c2422;
+  --oxy-bg-dark: #121816;
+  --oxy-line-dark: #2a3834;
+  --oxy-wash-a-dark: rgba(15, 118, 110, 0.35);
+  --oxy-wash-b-dark: rgba(92, 64, 40, 0.35);
+  --oxy-shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --oxy-field-dark: #121816;
+
+  --oxy-accent: #0f766e;
+  --oxy-accent-ink: #ecfdf5;
+  --oxy-danger: #b91c1c;
+  --oxy-nav-bg: #134e4a;
+  --oxy-nav-ink: #ecfdf5;
+  --oxy-nav-muted: #99f6e4;
+  --oxy-font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --oxy-font-ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+
+  --oxy-ink: var(--oxy-ink-light);
+  --oxy-muted: var(--oxy-muted-light);
+  --oxy-surface: var(--oxy-surface-light);
+  --oxy-bg: var(--oxy-bg-light);
+  --oxy-line: var(--oxy-line-light);
+  --oxy-wash-a: var(--oxy-wash-a-light);
+  --oxy-wash-b: var(--oxy-wash-b-light);
+  --oxy-shadow: var(--oxy-shadow-light);
+  --oxy-field: var(--oxy-field-light);
+  color-scheme: light;
+
+  /* Names the studio stylesheets already use. */
+  --bg: var(--oxy-bg);
+  --ink: var(--oxy-ink);
+  --muted: var(--oxy-muted);
+  --panel: var(--oxy-surface);
+  --line: var(--oxy-line);
+  --accent: var(--oxy-accent);
+  --accent-ink: var(--oxy-accent-ink);
+  --danger: var(--oxy-danger);
+  --shadow: var(--oxy-shadow);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --oxy-ink: var(--oxy-ink-dark);
+  --oxy-muted: var(--oxy-muted-dark);
+  --oxy-surface: var(--oxy-surface-dark);
+  --oxy-bg: var(--oxy-bg-dark);
+  --oxy-line: var(--oxy-line-dark);
+  --oxy-wash-a: var(--oxy-wash-a-dark);
+  --oxy-wash-b: var(--oxy-wash-b-dark);
+  --oxy-shadow: var(--oxy-shadow-dark);
+  --oxy-field: var(--oxy-field-dark);
+}
