@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate version matches package.json
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          PKG=$(node -p "require('./package.json').version")
+          if [ "$PKG" != "$VERSION" ]; then
+            echo "::error::Tag version ($VERSION) does not match package.json ($PKG)"
+            exit 1
+          fi
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      # Same-origin build. Leave API URLs unset so the site calls /api/v1, /hubs, /api/render, /api/flow.
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: ""
+          VITE_BACKEND_URL: ""
+          VITE_SIGNALR_HUB_URL: ""
+          VITE_RENDER_URL: ""
+          VITE_FLOW_URL: ""
+          VITE_RENDER_API_KEY: ""
+          VITE_FLOW_API_KEY: ""
+
+      - name: Zip the site
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          cp LICENSE dist/LICENSE
+          printf '%s\n' \
+            "oxykit-console ${VERSION}" \
+            "" \
+            "Static site for OxyKit Mail, Render, and Flow." \
+            "No Node and no .NET runtime on the server." \
+            "" \
+            "This build calls the APIs on the same origin:" \
+            "  /api/v1 and /hubs  -> Mail" \
+            "  /api/render/*      -> Render (prefix stripped)" \
+            "  /api/flow/*        -> Flow (prefix stripped)" \
+            "" \
+            "Unzip into the site root." \
+            "config.json turns modules on or off (mail, render, flow)." \
+            "Edit it and refresh. No rebuild." \
+            "" \
+            "IIS: https://oxykit.dev/guide/iis" \
+            "Docs: https://oxykit.dev/mail/auth#console" \
+            "" \
+            "License: MIT (LICENSE)" \
+            > dist/README.txt
+          mkdir -p release
+          (cd dist && zip -r "../release/oxykit-console-${VERSION}.zip" .)
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: release/*.zip
