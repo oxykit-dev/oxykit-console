@@ -4,3 +4,7 @@ dist
 *.local
 .env
 node_modules/.tmp
+
+# Local agent/editor rules (not tracked)
+.cursor/
+.devin/
