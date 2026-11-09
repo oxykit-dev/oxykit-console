@@ -1,6 +1,6 @@
 # oxykit-console — agent guide
 
-Vue app for Mail, Render, and Flow. The .NET hosts do not reference it. `oxykit-mail-web` is private — do not document or extend it.
+Vue app for Mail, Render, and Flow. The .NET hosts do not reference it.
 
 **MIT** · version in `package.json`. Tag `v*` builds one same-origin zip. See [`docs/RELEASE.md`](docs/RELEASE.md).
 
